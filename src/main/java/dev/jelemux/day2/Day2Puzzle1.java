@@ -5,12 +5,14 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dev.jelemux.util.FileUtil;
+
 public class Day2Puzzle1 {
     
     public static Position calculatePosition() {
         var position = new Position(0, 0, 0);
 
-        try (var reader = Util.readFromFile(); var lines = reader.lines()) {
+        try (var reader = FileUtil.readFromFile("day2/input"); var lines = reader.lines()) {
             lines.forEach(l -> {
                 var instructions = l.split(" ");
                 var direction = instructions[0];

@@ -5,13 +5,15 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dev.jelemux.util.FileUtil;
+
 public class Day2Puzzle2 {
     
     public static Position calculatePosition() {
         final var position = new Position(0, 0, 0);
         var aim = 0;
 
-        try (var reader = Util.readFromFile(); var lines = reader.lines()) {
+        try (var reader = FileUtil.readFromFile("day2/input"); var lines = reader.lines()) {
             lines.forEach(l -> {
                 var instructions = l.split(" ");
                 var direction = instructions[0];
@@ -32,7 +34,7 @@ public class Day2Puzzle2 {
                 }
             });
         } catch (URISyntaxException | IOException ex) {
-            Logger.getLogger(Day2Puzzle1.class.getName()).log(Level.SEVERE, "Unexpected Exception", ex);
+            Logger.getLogger(Day2Puzzle2.class.getName()).log(Level.SEVERE, "Unexpected Exception", ex);
         }
 
         return position;
