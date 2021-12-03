@@ -44,11 +44,23 @@ public class Day3Puzzle2 {
                 }
             }
 
-            final var zeroesIsLonger = isOxygen ? zeroes.size() > ones.size() : zeroes.size() >= ones.size();
-            if (isOxygen && zeroesIsLonger) {
-                filteredNumbers = zeroes;
-            } else {
+            final var zeroesIsLonger = zeroes.size() > ones.size();
+            if (isOxygen && zeroes.size() == ones.size()) {
                 filteredNumbers = ones;
+            } else if (!isOxygen && zeroes.size() == ones.size()) {
+                filteredNumbers = zeroes;
+            } else if (zeroesIsLonger) {
+                if (isOxygen) {
+                    filteredNumbers = zeroes;
+                } else {
+                    filteredNumbers = ones;
+                }
+            } else {
+                if (isOxygen) {
+                    filteredNumbers = ones;
+                } else {
+                    filteredNumbers = zeroes;
+                }
             }
 
             position++;
