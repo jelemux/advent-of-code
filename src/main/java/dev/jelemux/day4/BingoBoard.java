@@ -1,7 +1,9 @@
 package dev.jelemux.day4;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.List;
+
 import lombok.Getter;
 
 public class BingoBoard {
@@ -34,12 +36,12 @@ public class BingoBoard {
      * and then check if there's a bingo immediately.
      */
     public boolean isBingo() {
-        for (final var row: this.rows) {
+        for (final var row : this.rows) {
             if (row.isBingo()) {
                 return true;
             }
         }
-        for (final var column: this.columns) {
+        for (final var column : this.columns) {
             if (column.isBingo()) {
                 return true;
             }
@@ -48,9 +50,23 @@ public class BingoBoard {
     }
     
     public int sumOfUnmarkedFields() {
-        return Stream.concat(Arrays.stream(rows), Arrays.stream(columns))
-                .mapToInt(rc -> rc.sumOfUnmarkedFields())
+        return this.getAllFields()
+                .stream()
+                .filter(f -> !f.isChecked())
+                .distinct()
+                .mapToInt(BingoField::getNumber)
                 .sum();
+    }
+
+    private List<BingoField> getAllFields() {
+        final var fieldList = new ArrayList<BingoField>();
+        for (final var row : this.rows) {
+            fieldList.addAll(Arrays.asList(row.getFields()));
+        }
+        for (final var column : this.columns) {
+            fieldList.addAll(Arrays.asList(column.getFields()));
+        }
+        return fieldList;
     }
     
 }

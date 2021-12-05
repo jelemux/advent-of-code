@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class BingoGame {
         }
     }
 
+    @NonNull
     private Optional<WinningState> checkNumber(final int number) {
         final var fields = this.numberMapping.get(number);
         for (final var field: fields) {
@@ -36,18 +39,27 @@ public class BingoGame {
         return Optional.empty();
     }
 
-    private Optional<WinningState> checkNumbers(final int[] numbers) {
+    @NonNull
+    private List<WinningState> checkNumbers(final int[] numbers) {
+        final var winningOrder = new ArrayList<WinningState>();
         for (final var number: numbers) {
             final var winner = this.checkNumber(number);
             if (winner.isPresent()) {
-                return winner;
+                winningOrder.add(winner.get());
             }
         }
-        return Optional.empty();
+        return winningOrder;
     }
 
-    public Optional<WinningState> calculateWinner() {
-        return checkNumbers(drawnNumbers);
+    @NonNull
+    public List<WinningState> calculateWinningOrder() {
+        final var winningOrder = checkNumbers(drawnNumbers);
+
+        for (final var ws : winningOrder) {
+            System.out.println("Board: " + ws.getBoard().getId() + "; Score: " + ws.getScore());
+        }
+
+        return winningOrder;
     }
     
 }

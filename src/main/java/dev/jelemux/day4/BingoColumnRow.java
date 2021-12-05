@@ -1,15 +1,14 @@
 package dev.jelemux.day4;
 
-import java.util.Arrays;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 public class BingoColumnRow {
 
     private final BingoField[] fields;
 
     @Setter
-    @Getter
     private BingoBoard board;
 
     @SuppressWarnings("LeakingThisInConstructor")
@@ -31,13 +30,6 @@ public class BingoColumnRow {
             }
         }
         return true;
-    }
-
-    public int sumOfUnmarkedFields() {
-        return Arrays.stream(fields)
-                .filter(f -> !f.isChecked())
-                .mapToInt(f -> f.getNumber())
-                .sum();
     }
     
 }
